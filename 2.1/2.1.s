@@ -3,6 +3,10 @@ str:
 .string "%d "
 nstr:
 .string "\n"
+eqstr:
+.string "Equal!\n"
+foundstr:
+.string "%d is at (%d)!\n"
 .text
 .globl main
 .type main, @function
@@ -57,8 +61,42 @@ lp2:
 	popl	%ecx
 	loop 	lp2
 
+	movl 	$10, %ecx
+	movl	%esp, %esi
+	movl	%esp, %edi
+	addl	$40, %edi
+	repe 	cmpsl
 
+	cmpl	$0, %ecx
+	jne ne1
+	pushl	$eqstr
+	call	printf
+	addl	$4, %esp
+ne1:
 	
+	movl	$5,	%eax
+	movl	$10, %ecx
+	movl	%esp, %edi
+	repne	scasl
+	
+	pushl	%edi
+	pushl	$5
+	pushl	$foundstr
+	call 	printf
+	add 	$12, %esp
+
+
+	movl	$1,	%eax
+	movl	$10, %ecx
+	movl	%esp, %edi
+	repne	scasl
+	
+	pushl	%edi
+	pushl	$1
+	pushl	$foundstr
+	call 	printf
+	add 	$12, %esp
+
 	movl	$0, %eax
 	movl	%ebp, %esp
 	popl	%ebp
