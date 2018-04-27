@@ -5,6 +5,8 @@ okstr:
 .string "String contains only numbers and latin characters\n"
 notokstr:
 .string "String contains smthg that is not a number or latin character\n"
+infostr:
+.string "Rule #2: changes 1->a, 2->b, etc and reverses the text\n"
 newstr:
 .string "\n"
 .text
@@ -152,6 +154,9 @@ check_loop_end:
 	pushl	$string
 	call 	printf
 	pushl	$newstr
+	call 	printf
+
+	pushl	$infostr
 	call 	printf
 
 	movl	$0, %eax
