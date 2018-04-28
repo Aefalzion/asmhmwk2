@@ -79,20 +79,17 @@ main:
 	fmul
 	
 	movl 	$0, %ebx
-	call safe_pf
 loop1:
 	fld1
 	call safe_comip
 	jb 	end_loop1	
 	call safe_comipr
-	call safe_pf
 	fld1
 	fsubr
 	addl	$1, %ebx
 	jmp 	loop1
 end_loop1:
 	call safe_comipr
-	call safe_pf
 loop2:
 	fldz
 	fld1
@@ -103,15 +100,11 @@ loop2:
 	jmp end_loop2
 	e:
 	call safe_comipr
-	call safe_pf
 	fld1
 	fadd
-	call safe_pf
 	subl	$1, %ebx
-	call pb
 	jmp loop2
 end_loop2:
-	call safe_pf
 	f2xm1	
 	fld1
 	fadd
@@ -124,11 +117,8 @@ stp:
 loop3:
 	cmpl 	$0, %ebx
 	jle 	end_loop3
-	call 	safe_pf
 	fld1
-	call 	safe_pf
 	fadd
-	call 	safe_pf
 	subl 	$1, %ebx
 	jmp 	loop3
 end_loop3:
@@ -141,13 +131,21 @@ loop4:
 	addl 	$1, %ebx
 	jmp 	loop4
 end_loop4:
-	call	safe_pf
 	
 	fxch	%st(1)
 	fscale
+	
+	
 
+	fld1
+	fld1
+	fld1
+	fld1
+	faddp
+	faddp
+	faddp
 	call 	print_f
-
+	fstl	(%esp)
 	movl	%ebp, %esp
 	popl	%ebp
 	popl	%edx
